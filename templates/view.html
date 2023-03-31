@@ -1,15 +1,13 @@
-{{ define "index" }}
-{{ template "header" }}
-
+{{ define "view" }}
 {{ range $key, $value := . }}
-<div class="row">
+<div class="container" style="background-color: rgb(95, 95, 95)">
 	<div class="col-xs-2">
 		
 	</div>
 	<div class="col-xs-8">
 		<h1><a href="/edit?id={{$key}}"> {{$value.Title }}</a></h1>
 		
-		
+			{{ $value.Content }}
 	</div>
 	<div class="col-xs-2">
 	</div>
@@ -18,7 +16,7 @@
 	<div class="col-xs-2">
 	</div>
 	<div class="col-xs-8">
-		{{ $value.Content }}
+	
 	</div>
 	<div class="col-xs-2">
 	</div>
@@ -26,5 +24,11 @@
 
 
 {{ end }}
+{{ template "write" }}
+
 {{ template "footer" }}
-{{ end }}
+{{end}}
+
+
+
+

@@ -44,6 +44,8 @@ func savePostHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.FormValue("id")
 	title := r.FormValue("title")
 	content := r.FormValue("content")
+	high := r.FormValue("high")
+	fmt.Println(high)
 
 	var post *models.Post
 
@@ -71,8 +73,17 @@ func deleteHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 302)
 }
 
-func main() {
+func viewHandler(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("templates/view.html", "templates/write.html", "templates/index.html", "templates/header.html", "templates/footer.html")
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+	theme := r.URL.Query().Get("theme")
+	fmt.Printf("%s", theme)
+	t.ExecuteTemplate(w, "view", posts)
+}
 
+func main() {
 	posts = make(map[string]*models.Post, 0)
 
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
@@ -80,6 +91,7 @@ func main() {
 	http.HandleFunc("/write", writeHandler)
 	http.HandleFunc("/edit", editHandler)
 	http.HandleFunc("/delete", deleteHandler)
+	http.HandleFunc("/view", viewHandler)
 	http.HandleFunc("/SavePost", savePostHandler)
 
 	err := http.ListenAndServe(":3000", nil)
