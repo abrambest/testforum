@@ -1,7 +1,12 @@
 {{ define "index" }}
 {{ template "header" }}
 
-{{ range $key, $value := . }}
+
+{{ range $keys, $values := . }}
+
+{{range $key, $value:= $values}}
+
+
 <div class="row">
 	<div class="col-xs-2">
 		
@@ -24,7 +29,7 @@
 	</div>
 </div>
 
-
+{{ end }}
 {{ end }}
 {{ template "footer" }}
 {{ end }}
