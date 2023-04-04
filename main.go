@@ -70,7 +70,12 @@ func savePostHandler(w http.ResponseWriter, r *http.Request) {
 		post.Content = content
 	} else {
 		id = GenerateId()
-		posts[chTheme] = make(map[string]*models.Post)
+
+		_, found := posts[chTheme]
+		if !found {
+			posts[chTheme] = make(map[string]*models.Post, 0)
+		}
+
 		newPost := models.NewPost(id, title, content)
 		posts[chTheme][newPost.Id] = newPost
 
