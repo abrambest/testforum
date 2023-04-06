@@ -4,8 +4,16 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"testForum/internal"
 	"testForum/models"
 )
+
+type ContactDetails struct {
+	Login         string
+	Password      string
+	Success       bool
+	StorageAccess string
+}
 
 var (
 	posts   map[string]map[string]*models.Post
@@ -19,6 +27,22 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	t.ExecuteTemplate(w, "index", posts)
+}
+
+func signHandler(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("templates/signin.html", "templates/header.html", "templates/footer.html")
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+
+	// data:= ContactDetails{
+	// 	Login:         r.FormValue()
+	// Password:     string
+	// Success:       bool
+	// StorageAccess: string
+	// }
+
+	t.ExecuteTemplate(w, "signin", nil)
 }
 
 func writeHandler(w http.ResponseWriter, r *http.Request) {
@@ -115,10 +139,12 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	internal.CreateDB()
 	posts = make(map[string]map[string]*models.Post, 0)
 
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/signin", signHandler)
 	http.HandleFunc("/write", writeHandler)
 	http.HandleFunc("/edit", editHandler)
 	http.HandleFunc("/delete", deleteHandler)
