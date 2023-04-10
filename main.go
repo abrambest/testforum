@@ -109,6 +109,38 @@ func savePostHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 302)
 }
 
+func signUpHandler(w http.ResponseWriter, r *http.Request) {
+	email := r.FormValue("email")
+	username := r.FormValue("username")
+	passwd := r.FormValue("passwd")
+
+	fmt.Println(email)
+	fmt.Println(username)
+	fmt.Println(passwd)
+
+	// var post *models.Post
+
+	// if id != "" {
+	// 	post = posts[chTheme][id]
+	// 	post.Title = title
+	// 	post.Content = content
+	// } else {
+	// 	id = GenerateId()
+
+	// 	_, found := posts[chTheme]
+	// 	if !found {
+	// 		posts[chTheme] = make(map[string]*models.Post, 0)
+	// 	}
+
+	// 	newPost := models.NewPost(id, title, content)
+	// 	posts[chTheme][newPost.Id] = newPost
+
+	// }
+	// fmt.Printf("posts: %v\n", posts)
+
+	http.Redirect(w, r, "/", 302)
+}
+
 func deleteHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.FormValue("id")
 
@@ -150,6 +182,7 @@ func main() {
 	http.HandleFunc("/delete", deleteHandler)
 	http.HandleFunc("/view", viewHandler)
 	http.HandleFunc("/SavePost", savePostHandler)
+	http.HandleFunc("/SignUp", signUpHandler)
 
 	fmt.Println("Listen port: http://localhost:3000")
 

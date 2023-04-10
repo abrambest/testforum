@@ -13,9 +13,9 @@ func CreateDB() error {
 	if err != nil {
 		return err
 	}
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS product(
+	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS users(
 		users_id INTEGER PRIMARY KEY AUTOINCREMENT,
-		login TEXT NOT NULL,
+		user_name TEXT NOT NULL,
 		email TEXT,
 		password TEXT
 	);`)
