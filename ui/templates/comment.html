@@ -1,31 +1,24 @@
 {{ define "comment" }}
 
-{{ template "header" }}
-
-
-
 <div class="container">
 	<div class="col-xs-2">
 	</div>
 	<div class="col-xs-8">
-		<form role="form" method="POST" action="/CommentPost">
-			<input type="hidden" name="id" value="{{.Id}}" />
-			
+		<form role="form" action="/createComment?id={{.Id}}" method="POST">
 			<div class="form-group">
 				<label>Comment</label>
-				<textarea id="content" name="content">{{.Content}}</textarea>
+				<textarea placeholder="Enter text..." id="content" name="commentContent"></textarea>
 			</div>
 			
 			<button type="submit" name="send" value="send" class="btn btn-default center-block ">Send</button>
 
-
 		</form>
+
+        
 
 	</div>
 	<div class="col-xs-2">
-		{{ if .Id }}
-		<a href="/delete?id={{.Id}}">Delete</a>
-		{{ end }}
+		
 	</div>
 </div>
 

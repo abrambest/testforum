@@ -1,5 +1,6 @@
-{{ define "index" }}
+
 {{ template "header" }}
+
 
 
 <div class="row" style="padding: 20px;">
@@ -11,7 +12,7 @@
 	</div>
 
 	<div class="col-md-1" >
-		<h4 class="text-center" data-value="golang"><a href="/view?theme=golang">Golang</a></h4>
+		<h4 action="/tag" method="GET" class="text-center" data-value="golang">Golang</h4>
 	</div>
 
 	<div class="col-md-1" >
@@ -26,27 +27,8 @@
 	</div>
 	
 
-
-
-	
-
-
-	
-
-
-
 	<div class="col-md-4" >
-		<!-- <div class="container_footer" >
 
-            <form action="/ascii-art" method="POST" >
-            
-                <select name="font" class="btn btn-info" >
-					<option class="optionfiltr" value="Created" style="font-size: 100%;" >All posts</option>
-                    <option class="optionfiltr" value="Created" style="font-size: 100%;" >Created posts</option>
-                    <option class="optionfiltr" value="Liked" style="font-size: 100%;" >Liked posts</option>                 
-                </select>
-                <button id="btn-signup" value="go" type="submit" class="btn btn-info"><i class="icon-hand-right"></i>Go</button>
-            </form> -->
             
             
         </div>
@@ -73,27 +55,25 @@
 
 
 <div class="row" style="padding: 20px;">
-	<div class="col-md-3" >
+	<div class="col-md-2" >
 	
 	</div>
 
-	<div class="col-md-3" >
-<h3 style="color: #478ccf;">Posts:</h3>
+	<div class="col-md-8" >
+<h3 class="text-center" style="color: #478ccf;">Posts:</h3>
 	</div>
 	
 
-	<div class="col-md-3" >
+	<div class="col-md-2" >
 
 	</div>
-	<div class="col-md-3" >
-
-	</div>
+	
 </div>
 
 
-{{ if . }}
+{{ if .Posts }}
 
-{{ range $keys, $values := . }}
+{{range .Posts}}
 
 <div class="container">
 
@@ -104,11 +84,12 @@
 	<div class="col-xs-8">
 		<div class=" panel panel-default">
 		<div class="panel-heading">
-			<h1 style="color: #478ccf;" class="panel-title"><a href="/edit?id={{$keys}}"> {{$values.Title }}-|{{$values.Theme}}|</a></h1>
+			<h1 style="color: #478ccf;" class="panel-title"><a href="/snippet?id={{.Id}}"> {{.Title }}</a></h1>
 			<h3 class="username" style="font-size: 15px;">@Username</h3>
+
 		</div>
 		<div class="panel-body">
-			{{ $values.Content }}
+			{{ .Description }}
 		</div>
 	</div>
 	</div>
@@ -145,4 +126,3 @@
 <p class="text-center">  Тут пока ничего нет <a href="/create" > Создать </a></p>
 {{ end }}
 {{ template "footer" }}
-{{ end }}
