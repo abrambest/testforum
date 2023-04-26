@@ -2,7 +2,8 @@ package mysql
 
 import (
 	"database/sql"
-	"testForum/models"
+	"fmt"
+	"testForum/internal/models"
 )
 
 type PostModel struct {
@@ -11,6 +12,7 @@ type PostModel struct {
 
 func (m *PostModel) Insert(title, content, expires string) (int, error) {
 	stmt := `INSERT INTO `
+	fmt.Println(stmt)
 	return 0, nil
 }
 

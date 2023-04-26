@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"crypto/rand"
@@ -6,9 +6,7 @@ import (
 )
 
 func GenerateId() string {
-
 	b := make([]byte, 16)
 	rand.Read(b)
 	return fmt.Sprintf("%x", b)
-
 }
