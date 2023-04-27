@@ -50,6 +50,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		"./ui/templates/header.html",
 		"./ui/templates/footer.html",
 		"./ui/templates/buttons.html",
+		"./ui/templates/theme-topik.html",
 	}
 	// fmt.Println("222")
 
@@ -106,6 +107,7 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 		"./ui/templates/footer.html",
 		"./ui/templates/comment.html",
 		"./ui/templates/buttons.html",
+		"./ui/templates/theme-topik.html",
 	}
 
 	userid := app.GetUserIDForUse(w, r)
@@ -133,8 +135,9 @@ func (app *application) createSnippetForm(w http.ResponseWriter, r *http.Request
 			return
 		}
 		files := []string{
-			"./ui/templates/header.html",
 			"./ui/templates/write.html",
+			"./ui/templates/header.html",
+			"./ui/templates/footer.html",
 		}
 
 		userid := app.GetUserIDForUse(w, r)
@@ -160,7 +163,7 @@ func (app *application) createSnippetForm(w http.ResponseWriter, r *http.Request
 		userId := userModel.Id
 		title := r.PostForm.Get("title")
 		content := r.PostForm.Get("content")
-		tags := r.PostForm.Get("tags")
+		tags := r.PostForm.Get("category")
 
 		errors := make(map[string]string)
 		if userId == 0 {
@@ -178,10 +181,9 @@ func (app *application) createSnippetForm(w http.ResponseWriter, r *http.Request
 
 		if len(errors) > 0 {
 			files := []string{
-				"./ui/html/home.page.html",
-				"./ui/html/base.layout.html",
-				"./ui/html/footer.html",
-				"./ui/html/create.page.html",
+				"./ui/templates/write.html",
+				"./ui/templates/header.html",
+				"./ui/templates/footer.html",
 			}
 			app.render(w, r, files, &templateData{
 				FormErrors: errors,
@@ -430,8 +432,7 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	tmpl = fmt.Sprintf("./ui/html/%s.html", tmpl)
-	t, err := template.ParseFiles(tmpl)
+	t, err := template.ParseFiles("./ui/templates/signup.html", "./ui/templates/header.html", "./ui/templates/footer.html")
 	if err != nil {
 		ErrorHandler(w, http.StatusText(http.StatusInternalServerError), 500)
 		// http.Error(w, err.Error(), http.StatusInternalServerError)
