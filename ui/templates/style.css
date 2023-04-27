@@ -16,3 +16,8 @@ h4{
 .category{
     margin-right: 50px;
 }
+
+.btn.active {
+    background-color: red;
+    color: white;
+}

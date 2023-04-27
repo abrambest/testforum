@@ -49,6 +49,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		"./ui/templates/index.html",
 		"./ui/templates/header.html",
 		"./ui/templates/footer.html",
+		"./ui/templates/buttons.html",
 	}
 	// fmt.Println("222")
 
@@ -104,6 +105,7 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 		"./ui/templates/header.html",
 		"./ui/templates/footer.html",
 		"./ui/templates/comment.html",
+		"./ui/templates/buttons.html",
 	}
 
 	userid := app.GetUserIDForUse(w, r)
@@ -131,10 +133,8 @@ func (app *application) createSnippetForm(w http.ResponseWriter, r *http.Request
 			return
 		}
 		files := []string{
-			"./ui/html/home.page.html",
-			"./ui/html/base.layout.html",
-			"./ui/html/footer.html",
-			"./ui/html/create.page.html",
+			"./ui/templates/header.html",
+			"./ui/templates/write.html",
 		}
 
 		userid := app.GetUserIDForUse(w, r)
@@ -337,18 +337,27 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		// http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
+	if r.URL.Query().Get("message") == "loginfirst" {
+		tmpl, _ := template.ParseFiles("./ui/templates/signin.html", "./ui/templates/header.html", "./ui/templates/footer.html")
+		txt := "Please login first."
+		err = tmpl.Execute(w, txt)
+		return
+
+	}
 	defer dataBase.Close()
 	switch r.Method {
 	case "GET":
 		if r.Method != http.MethodGet {
+
 			w.Header().Set("Allow", http.MethodGet)
 			ErrorHandler(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 			return
 		}
 
-		tmpl, err := template.ParseFiles("./ui/html/signin.html")
+		tmpl, err := template.ParseFiles("./ui/templates/signin.html", "./ui/templates/header.html", "./ui/templates/footer.html")
 		err = tmpl.Execute(w, nil)
 		if err != nil {
+			fmt.Println("Could :", err)
 			// w.WriteHeader(http.StatusInternalServerError)
 			ErrorHandler(w, http.StatusText(http.StatusInternalServerError), 500)
 			return
@@ -417,9 +426,6 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 			// fmt.Println(sessionToken)
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
-	}
-	if r.URL.Query().Get("message") == "loginfirst" {
-		fmt.Fprint(w, "Please login first.")
 	}
 }
 
@@ -592,9 +598,10 @@ func (app *application) filterByTag(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	files := []string{
-		"./ui/html/tags.html",
-		"./ui/html/base.layout.html",
-		"./ui/html/footer.html",
+		"./ui/templates/select-category.html",
+		"./ui/templates/header.html",
+		"./ui/templates/footer.html",
+		"./ui/templates/buttons.html",
 	}
 
 	userid := app.GetUserIDForUse(w, r)
