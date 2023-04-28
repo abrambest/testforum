@@ -50,7 +50,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		"./ui/templates/header.html",
 		"./ui/templates/footer.html",
 		"./ui/templates/buttons.html",
-		"./ui/templates/theme-topik.html",
+		"./ui/templates/category-topik.html",
 	}
 	// fmt.Println("222")
 
@@ -107,7 +107,7 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 		"./ui/templates/footer.html",
 		"./ui/templates/comment.html",
 		"./ui/templates/buttons.html",
-		"./ui/templates/theme-topik.html",
+		"./ui/templates/category-topik.html",
 	}
 
 	userid := app.GetUserIDForUse(w, r)
@@ -603,6 +603,7 @@ func (app *application) filterByTag(w http.ResponseWriter, r *http.Request) {
 		"./ui/templates/header.html",
 		"./ui/templates/footer.html",
 		"./ui/templates/buttons.html",
+		"./ui/templates/category-topik.html",
 	}
 
 	userid := app.GetUserIDForUse(w, r)

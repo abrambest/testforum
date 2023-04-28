@@ -53,7 +53,7 @@ func (m *UserModel) Get(id int) (*models.Post, error) {
 
 // This will return the 10 most recently created snippets.
 func (m *UserModel) Latest() ([]*models.Post, error) {
-	stmt := `SELECT id, user_id, title, content, tags, created FROM posts`
+	stmt := `SELECT id, user_id, title, content, tags, created, username FROM posts`
 
 	rows, err := m.DB.Query(stmt)
 	if err != nil {
@@ -67,7 +67,7 @@ func (m *UserModel) Latest() ([]*models.Post, error) {
 	for rows.Next() {
 		s := &models.Post{}
 
-		err = rows.Scan(&s.Id, &s.AuthorId, &s.Title, &s.Description, &s.Tags, &s.Created)
+		err = rows.Scan(&s.Id, &s.AuthorId, &s.Title, &s.Description, &s.Tags, &s.Created, &s.UserName)
 		if err != nil {
 			return nil, err
 		}
@@ -350,7 +350,7 @@ func (m *UserModel) GetLikedPosts(userID int) ([]*models.Post, error) {
 }
 
 func (m *UserModel) GetPostsByTag(tag string) ([]*models.Post, error) {
-	stmt := `SELECT id, title, content, tags, created
+	stmt := `SELECT id, title, content, tags, created, username
              FROM posts WHERE tags LIKE '%' || ? || '%'`
 
 	rows, err := m.DB.Query(stmt, tag)
@@ -362,7 +362,7 @@ func (m *UserModel) GetPostsByTag(tag string) ([]*models.Post, error) {
 	posts := []*models.Post{}
 	for rows.Next() {
 		p := &models.Post{}
-		err := rows.Scan(&p.Id, &p.Title, &p.Description, &p.Tags, &p.Created)
+		err := rows.Scan(&p.Id, &p.Title, &p.Description, &p.Tags, &p.Created, &p.UserName)
 		if err != nil {
 			return nil, err
 		}

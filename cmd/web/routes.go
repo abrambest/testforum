@@ -7,7 +7,7 @@ import (
 func (app *application) routers() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", app.home)
-	mux.HandleFunc("/snippet/create", app.authMiddleware(app.createSnippetForm))
+	mux.HandleFunc("/create", app.authMiddleware(app.createSnippetForm))
 	mux.HandleFunc("/snippet", app.showSnippet)
 	mux.HandleFunc("/createComment", app.authMiddleware(app.createComment))
 	mux.HandleFunc("/signup", Signup)
