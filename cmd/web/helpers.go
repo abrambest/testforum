@@ -31,7 +31,7 @@ func (app *application) addDefaultData(td *templateData, r *http.Request) *templ
 	return td
 }
 
-func (app *application) render(w http.ResponseWriter, r *http.Request, files []string, td *templateData) {
+func (app *application) render(w http.ResponseWriter, r *http.Request, files []string, td *templateData) { // rend
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
 
@@ -41,6 +41,7 @@ func (app *application) render(w http.ResponseWriter, r *http.Request, files []s
 	}
 
 	err = ts.Execute(w, app.addDefaultData(td, r))
+	fmt.Println("888888888888888888")
 	if err != nil {
 
 		app.serverError(w, err)

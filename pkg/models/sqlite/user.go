@@ -316,6 +316,7 @@ func (m *UserModel) GetLikedPosts(userID int) ([]*models.Post, error) {
 	// Get the IDs of all posts that have been liked by the user
 	rows, err := m.DB.Query("SELECT post_id FROM post_likes WHERE user_id = $1", userID)
 	if err != nil {
+		fmt.Println("BBBBBBBBBBBBBBBBBBBBBBB")
 		return nil, err
 	}
 	defer rows.Close()
@@ -334,6 +335,7 @@ func (m *UserModel) GetLikedPosts(userID int) ([]*models.Post, error) {
 		// Use the Get method to get the post by its ID
 		post, err := m.Get(postID)
 		if err != nil {
+			fmt.Println("Тут ошибка")
 			return nil, err
 		}
 

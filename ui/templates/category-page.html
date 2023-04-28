@@ -46,7 +46,7 @@
                         <button class="pull-right glyphicon glyphicon-heart-empty" type="submit "> {{.Like}} Like</button>
                     </form>
                     
-                    <form action="/post/like" method="POST">
+                    <form action="/comment/like" method="POST">
                         <input type="hidden" name="post_id" value="{{ .PostId }}">
                         <input type="hidden" name="action" value="dislike">
                         <input type="hidden" name="comment_id" value="{{.Id}}">

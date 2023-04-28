@@ -528,7 +528,7 @@ func (app *application) likeComment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	commentID, err := strconv.Atoi(r.PostFormValue("comment_id"))
-	postID, err := strconv.Atoi(r.PostFormValue("post_idc"))
+	postID, err := strconv.Atoi(r.PostFormValue("post_id"))
 	// fmt.Println(commentID)
 	if err != nil {
 		app.errorLog.Println(err)
@@ -568,15 +568,15 @@ func (app *application) likedPosts(w http.ResponseWriter, r *http.Request) {
 	s, err := app.posts.GetLikedPosts(userModel.Id)
 	if err != nil {
 		// app.serverError(w, err)
-		fmt.Println("AAAAAAAAAAAAAAAAAAAAA")
+		fmt.Println("44444444444444")
 		ErrorHandler(w, http.StatusText(http.StatusInternalServerError), 500)
 		return
 	}
 	files := []string{
 		"./ui/templates/header.html",
-		"./ui/templates/page-mylikes.html",
+
 		"./ui/templates/buttons.html",
-		"./ui/templates/category-topik.html",
+
 		"./ui/templates/footer.html",
 	}
 
@@ -628,6 +628,7 @@ func getCookieValue(r *http.Request, cookieName string) (string, error) {
 func (app *application) GetUserIDForUse(w http.ResponseWriter, r *http.Request) *models.User {
 	sessionToken, err := getCookieValue(r, "session_token")
 	if err != nil {
+		fmt.Println("Get Id 1")
 		// app.clienrError(w, http.StatusBadRequest)
 		// http.Redirect(w, r, "/", http.StatusSeeOther)
 		// ErrorHandler(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
@@ -643,10 +644,12 @@ func (app *application) GetUserIDForUse(w http.ResponseWriter, r *http.Request) 
 			ErrorHandler(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		} else {
 			// app.serverError(w, err)
+			fmt.Println("Get Id 2")
 			ErrorHandler(w, http.StatusText(http.StatusInternalServerError), 500)
 		}
 		return nil
 	}
+	fmt.Println("Get Id 3")
 	return userIdFrom
 }
 
