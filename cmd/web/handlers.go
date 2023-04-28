@@ -536,11 +536,11 @@ func (app *application) likeComment(w http.ResponseWriter, r *http.Request) {
 		app.clienrError(w, http.StatusBadRequest)
 		return
 	}
-	action := r.PostFormValue("actionc")
+	action := r.PostFormValue("action")
 	userModel := app.GetUserIDForUse(w, r)
-	if action == "likec" {
+	if action == "like" {
 		err = app.posts.LikeComment(commentID, userModel.Id)
-	} else if action == "dislikec" {
+	} else if action == "dislike" {
 		err = app.posts.DislikeComment(commentID, userModel.Id)
 	}
 
@@ -557,6 +557,7 @@ func (app *application) likeComment(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) likedPosts(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
+
 		w.Header().Set("Allow", http.MethodGet)
 		ErrorHandler(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 		return
@@ -567,13 +568,16 @@ func (app *application) likedPosts(w http.ResponseWriter, r *http.Request) {
 	s, err := app.posts.GetLikedPosts(userModel.Id)
 	if err != nil {
 		// app.serverError(w, err)
+		fmt.Println("AAAAAAAAAAAAAAAAAAAAA")
 		ErrorHandler(w, http.StatusText(http.StatusInternalServerError), 500)
 		return
 	}
 	files := []string{
-		"./ui/html/liked_posts.html",
-		"./ui/html/base.layout.html",
-		"./ui/html/footer.html",
+		"./ui/templates/header.html",
+		"./ui/templates/page-mylikes.html",
+		"./ui/templates/buttons.html",
+		"./ui/templates/category-topik.html",
+		"./ui/templates/footer.html",
 	}
 
 	userid := app.GetUserIDForUse(w, r)
@@ -661,9 +665,12 @@ func (app *application) userPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	files := []string{
-		"./ui/html/userpost.html",
-		"./ui/html/base.layout.html",
-		"./ui/html/footer.html",
+		"./ui/templates/page-myposts.html",
+		"./ui/templates/header.html",
+		"./ui/templates/buttons.html",
+		"./ui/templates/category-topik.html",
+
+		"./ui/templates/footer.html",
 	}
 
 	userid := app.GetUserIDForUse(w, r)

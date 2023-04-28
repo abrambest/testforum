@@ -58,7 +58,7 @@ func ErrorHandler(w http.ResponseWriter, message string, code int) {
 	w.WriteHeader(code)
 	// fmt.Println(code)
 	errorBody := ErrorBody{Message: message, Code: code}
-	html, err := template.ParseFiles("./ui/templates/error.html")
+	html, err := template.ParseFiles("./ui/templates/error.html", "./ui/templates/header.html")
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
